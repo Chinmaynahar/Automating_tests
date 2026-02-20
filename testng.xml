@@ -2,7 +2,9 @@
 <suite name="Automation Suite">
     <test name="Sample Test">
         <classes>
-            <class name="api.SampleTest"/>
+            <class name="api.AuthTests"/>
+            <class name="api.UserTests"/>
+            <class name="api.ExpenseTests"/>
         </classes>
     </test>
 </suite>
