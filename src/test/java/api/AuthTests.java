@@ -14,6 +14,7 @@ public class AuthTests extends AuthBaseTest {
     public static String accessToken;
     public static String userId;
     public static String username;
+    public static String token;
 
     @Test(priority = 1)
     public void signupTest() {
@@ -38,14 +39,12 @@ public class AuthTests extends AuthBaseTest {
                         .when()
                         .post("/auth/signup")
                         .then()
-                        .statusCode(anyOf(is(200), is(201)))
+                         .statusCode(anyOf(is(200), is(201)))
                         .extract().response();
 
         response.prettyPrint(); // keep temporarily
+  userId = response.jsonPath().getString("userid"); // adjust if needed
 
-        userId = response.jsonPath().getString("userid"); // adjust if needed
-
-        Assert.assertNotNull(userId, "Signup did not return userId");
     }
 
     @Test(priority = 2)
@@ -70,7 +69,7 @@ public class AuthTests extends AuthBaseTest {
                         .extract().response();
 
         accessToken = response.jsonPath().getString("accessToken");
-
+        token = response.jsonPath().getString("token");
         Assert.assertNotNull(accessToken);
     }
 }

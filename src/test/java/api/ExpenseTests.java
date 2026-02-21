@@ -5,6 +5,8 @@ import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.core.AnyOf.anyOf;
 
 public class ExpenseTests extends ExpenseBaseTest {
 
@@ -49,4 +51,26 @@ public class ExpenseTests extends ExpenseBaseTest {
                 .then()
                 .statusCode(200);
     }
+
+    @Test
+    public void missingToken(){
+        given()
+                .header("Authorization", "Bearer ")
+                .when()
+                .get("expense/get")
+                .then()
+                .statusCode(400);//missing headers
+    }
+
+    @Test
+    public void invalidToken(){
+        given()
+                .header("Authorization", "Bearer " + AuthTests.accessToken+"12345")
+                .when()
+                .get("expense/get")
+                .then()
+                .statusCode(500);
+    }
+
+
 }
